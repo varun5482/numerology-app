@@ -41,41 +41,64 @@ const BirthdayGrid = ({ date, gender }) => {
 
   const renderGrid = () => {
     getFormatedGrid();
-    return baseGrid.map(({ value, count, element, planet }) => {
-      return (
-        <div
-          className={`border-2 border-black p-5 ${!count ? "opacity-35" : ""}`}
-        >
-          <div className="flex flex-row justify-between text-gray-600">
-            <div>{value}</div>
-            <div>Count: {count}</div>
+    return baseGrid.map(
+      ({
+        value,
+        count,
+        element,
+        planet,
+        colDirection,
+        rowDirection,
+        colDirectionPosition = "",
+        rowDirectionPosition = "",
+      }) => {
+        return (
+          <div className="relative">
+            <div className={`absolute ${colDirectionPosition}`}>
+              {colDirection}
+            </div>
+            <div className="relative">
+              <div className={`absolute ${rowDirectionPosition}`}>
+                {rowDirection}
+              </div>
+              <div
+                className={`border-2 border-black p-5 ${
+                  !count ? "opacity-35" : ""
+                }`}
+              >
+                <div className="flex flex-row justify-between text-gray-600">
+                  <div>{value}</div>
+                  <div>Count: {count}</div>
+                </div>
+                <div className="flex flex-row justify-between uppercase">
+                  <div className={count ? "text-red-800" : "text-slate-900"}>
+                    {element}
+                  </div>
+                  <div className={count ? "text-orange-800" : "text-slate-900"}>
+                    {planet}
+                  </div>
+                </div>
+                {count ? (
+                  <div className="flex flex-row gap-1 justify-center">
+                    {Array(count)
+                      .fill(0)
+                      .map((index) => {
+                        return <div>{value}</div>;
+                      })}
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
-          <div className="flex flex-row justify-between uppercase">
-            <div className={count ? "text-red-800" : "text-slate-900"}>
-              {element}
-            </div>
-            <div className={count ? "text-orange-800" : "text-slate-900"}>
-              {planet}
-            </div>
-          </div>
-          {count ? (
-            <div className="flex flex-row gap-1 justify-center">
-              {Array(count)
-                .fill(0)
-                .map((index) => {
-                  return <div>{value}</div>;
-                })}
-            </div>
-          ) : null}
-        </div>
-      );
-    });
+        );
+      }
+    );
   };
 
   return (
     <div className="grow">
       <div className="text-left text-xl my-3">Birth Date Grid</div>
-      <div className="grid grid-cols-3">{renderGrid()}</div>
+      <div className="grid grid-cols-3 p-10">{renderGrid()}</div>
       <div className="flex flex-row gap-5 my-5 justify-center">
         <div className="border-4 border-black rounded p-3">Kua: {kua}</div>
         <div className="border-4 border-black rounded p-3">
