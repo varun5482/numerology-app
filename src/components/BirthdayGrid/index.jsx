@@ -41,12 +41,22 @@ const BirthdayGrid = ({ date, gender }) => {
 
   const renderGrid = () => {
     getFormatedGrid();
-    return baseGrid.map(({ value, count }) => {
+    return baseGrid.map(({ value, count, element, planet }) => {
       return (
-        <div className="border-2 border-black p-5">
+        <div
+          className={`border-2 border-black p-5 ${!count ? "opacity-35" : ""}`}
+        >
           <div className="flex flex-row justify-between text-gray-600">
             <div>{value}</div>
             <div>Count: {count}</div>
+          </div>
+          <div className="flex flex-row justify-between uppercase">
+            <div className={count ? "text-red-800" : "text-slate-900"}>
+              {element}
+            </div>
+            <div className={count ? "text-orange-800" : "text-slate-900"}>
+              {planet}
+            </div>
           </div>
           {count ? (
             <div className="flex flex-row gap-1 justify-center">
